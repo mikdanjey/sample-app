@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
-import { schema } from './validationSchema';
-import { ErrorMessage } from './ErrorMessage';
+import { schema } from "./validationSchema";
+import { ErrorMessage } from "./ErrorMessage";
 
 export const App = () => (
   <div>
-    <h1>Friend List</h1>
+    <h1>Nested Form</h1>
     <Formik
       initialValues={{ friends: [{ name: "", age: "" }] }}
       validationSchema={schema}
@@ -22,28 +22,31 @@ export const App = () => (
               <div>
                 {values.friends.map((friend, index) => (
                   <div key={index}>
-                    {/** both these conventions do the same */}
+                    <b>Name: </b>
                     <Field name={`friends[${index}].name`} />
                     <ErrorMessage name={`friends[${index}].name`} />
-                    <Field name={`friends.${index}.age`} />
-                    <ErrorMessage name={`friends[${index}].age`} />
 
+                    <label> Age: </label>
+                    <Field name={`friends[${index}].age`} />
+                    <ErrorMessage name={`friends[${index}].age`} />
+{" "}
                     <button
                       type="button"
                       onClick={() => arrayHelpers.remove(index)}
                     >
-                      -
+                      Remove
                     </button>
                   </div>
                 ))}
+                <br/>
                 <button
                   type="button"
                   onClick={() => arrayHelpers.push({ name: "", age: "" })}
                 >
-                  +
+                  Add
                 </button>
                 <div>
-                  <br/>
+                  <br />
                   <button type="submit">Submit</button>
                 </div>
               </div>
