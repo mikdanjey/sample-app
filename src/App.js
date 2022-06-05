@@ -1,17 +1,20 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
+import { schema } from './validationSchema';
+import { ErrorMessage } from './ErrorMessage';
 
 export const App = () => (
   <div>
     <h1>Friend List</h1>
     <Formik
       initialValues={{ friends: [{ name: "", age: "" }] }}
+      validationSchema={schema}
       onSubmit={(values) =>
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
         }, 500)
       }
-      render={({ values }) => (
+      render={({ values, errors }) => (
         <Form>
           <FieldArray
             name="friends"
@@ -21,7 +24,9 @@ export const App = () => (
                   <div key={index}>
                     {/** both these conventions do the same */}
                     <Field name={`friends[${index}].name`} />
+                    <ErrorMessage name={`friends[${index}].name`} />
                     <Field name={`friends.${index}.age`} />
+                    <ErrorMessage name={`friends[${index}].age`} />
 
                     <button
                       type="button"
